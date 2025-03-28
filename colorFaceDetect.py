@@ -113,6 +113,7 @@ if __name__ == '__main__':
         boxSize = 10;
         obraz = obdelaj_sliko_s_skatlami(frame, boxSize, boxSize, barva)
 
+        # Najdi min in max koordinate območja obraza
         min_x, min_y = float('inf'), float('inf')
         max_x, max_y = float('-inf'), float('-inf')
 
@@ -124,6 +125,7 @@ if __name__ == '__main__':
                     max_x = max(max_x, x)
                     max_y = max(max_y, y)
 
+        # Nariši škatlo okoli obraza
         if min_x < float('inf') and min_y < float('inf'):
             top_left = (min_x * boxSize, min_y * boxSize)
             bottom_right = ((max_x + 1) * boxSize, (max_y + 1) * boxSize)
