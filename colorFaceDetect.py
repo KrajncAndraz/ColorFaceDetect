@@ -12,21 +12,28 @@ def obdelaj_sliko_s_skatlami(slika, sirina_skatle, visina_skatle, barva_koze) ->
     Primer: Če je v sliki 25 škatel, kjer je v vsaki vrstici 5 škatel, naj bo seznam oblike
       [[1,0,0,1,1],[0,0,0,0,0],[0,0,0,0,0],[0,0,0,0,0],[1,0,0,0,1]]. 
       V tem primeru je v prvi škatli 1 piksel kože, v drugi 0, v tretji 0, v četrti 1 in v peti 1.'''
+    # Pridobimo dimenzije slike
     visina, sirina, _ = slika.shape
 
-    threshold = sirina_skatle * visina_skatle * 0.6
+    threshold = sirina_skatle * visina_skatle * 0.6  # 60% škatle mora biti koža
     
+    # Seznam za shranjevanje rezultatov
     skatle_matrika = []
 
+    # Prehajamo čez sliko v korakih velikosti škatle
     for y in range(0, visina, visina_skatle):
-        vrstica = []
+        vrstica = []  # Ena vrstica matrike
         for x in range(0, sirina, sirina_skatle):
+            # Preverimo, da ne presežemo meje slike
             if x + sirina_skatle <= sirina and y + visina_skatle <= visina:
+                # Izrežemo del slike (škatlo)
                 skatla = slika[y:y + visina_skatle, x:x + sirina_skatle]
+                # Preštejemo piksle z barvo kože v škatli
                 stevilo_pikslov = prestej_piklse_z_barvo_koze(skatla, barva_koze)
                 vrstica.append(1 if stevilo_pikslov > threshold else 0)
 
             else:
+                # Če je škatla čez rob slike, dodamo 0 (ne upoštevamo)
                 vrstica.append(0)
         skatle_matrika.append(vrstica)
     
