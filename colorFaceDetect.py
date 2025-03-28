@@ -22,7 +22,16 @@ def doloci_barvo_koze(slika,levo_zgoraj,desno_spodaj) -> tuple:
     '''Ta funkcija se kliče zgolj 1x na prvi sliki iz kamere. 
     Vrne barvo kože v območju ki ga definira oklepajoča škatla (levo_zgoraj, desno_spodaj).
       Način izračuna je prepuščen vaši domišljiji.'''
-    pass
+    # Izrežemo pravokotno območje
+    x1, y1 = levo_zgoraj
+    x2, y2 = desno_spodaj
+    roi = slika[y1:y2, x1:x2]  # Region of Interest (ROI)
+    
+    # Izračunamo povprečno barvo v območju
+    povprecna_barva = np.mean(roi, axis=(0, 1))  # Srednja vrednost po vseh pikslov (po kanalih BGR)
+    
+    # Vrnemo barvo kot tuple v BGR formatu
+    return tuple(map(int, povprecna_barva))
 
 if __name__ == '__main__':
     #Pripravi kamero
