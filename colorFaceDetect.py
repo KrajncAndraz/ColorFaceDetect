@@ -2,8 +2,7 @@ import cv2 as cv
 import numpy as np
 
 def zmanjsaj_sliko(slika, sirina, visina):
-    '''Zmanjšaj sliko na velikost sirina x visina.'''
-    pass
+    slika = cv.resize(slika, (sirina, visina), interpolation=cv.INTER_AREA)
 
 def obdelaj_sliko_s_skatlami(slika, sirina_skatle, visina_skatle, barva_koze) -> list:
     '''Sprehodi se skozi sliko v velikosti škatle (sirina_skatle x visina_skatle) in izračunaj število pikslov kože v vsaki škatli.
