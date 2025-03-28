@@ -14,7 +14,22 @@ def obdelaj_sliko_s_skatlami(slika, sirina_skatle, visina_skatle, barva_koze) ->
       V tem primeru je v prvi škatli 1 piksel kože, v drugi 0, v tretji 0, v četrti 1 in v peti 1.'''
     pass
 
-prestej_piklse_z_barvo_koze
+def prestej_piklse_z_barvo_koze(slika, barva_koze) -> int:
+    '''Prestej število pikslov z barvo kože v škatli.'''
+    # Nastavimo dovoljeno odstopanje barve (toleranca)
+    toleranca = 30
+    
+    # Določimo zgornjo in spodnjo mejo barve kože (BGR format)
+    spodnja_meja = np.clip(np.array(barva_koze) - toleranca, 0, 255).astype(np.uint8)
+    zgornja_meja = np.clip(np.array(barva_koze) + toleranca, 0, 255).astype(np.uint8)
+
+    # Uporabimo masko za iskanje pikslov z barvo kože
+    maska = cv.inRange(slika, spodnja_meja, zgornja_meja)
+    
+    # Preštejemo bele pike v maski (pikseli, ki so v določenem barvnem obsegu)
+    stevilo_pikslov = cv.countNonZero(maska)
+    
+    return stevilo_pikslov
 
 def doloci_barvo_koze(slika,levo_zgoraj,desno_spodaj) -> tuple:
     '''Ta funkcija se kliče zgolj 1x na prvi sliki iz kamere. 
